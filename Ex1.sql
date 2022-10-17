@@ -18,10 +18,17 @@ create table Employee(
   Age number(3),
   ProjID varchar2(20) references Project(ID));
   
+  create table WorksOn(
+  SSN varchar2(20) references Employee(SSN),
+  PID varchar2(20) references Project(ID));
+
+  
   insert into Department values('D1','Database',45,'S1');
   insert into Department values('D2','Cloud',55,'S2');
   insert into Department values('D3','Full Stack',40,'S4');
   insert into Department values('D4','ML',50,'S6');
+  insert into Department values('D5','Support',40,'S7');
+  insert into Department values('D6','Managing',14,'S8');
   select * from Department;
 
 
