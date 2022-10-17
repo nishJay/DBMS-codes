@@ -17,4 +17,11 @@ create table Employee(
   Gender char(3),
   Age number(3),
   ProjID varchar2(20) references Project(ID));
+  
+  insert into Department values('D1','Database',45,'S1');
+  insert into Department values('D2','Cloud',55,'S2');
+  insert into Department values('D3','Full Stack',40,'S4');
+  insert into Department values('D4','ML',50,'S6');
+  select * from Department;
+
 
