@@ -36,6 +36,7 @@ insert into Reserves values('B2','S4','TUE');
 insert into Reserves values('B3','S3','WED');
 insert into Reserves values('B4','S1','MON');
 insert into Reserves values('B5','S5','MON');
+insert into Reserves values('B5','S6','MON');
 
 # Obtain the details of the boats reserved by ‘Shyam’.
 select Boat_id, BoatName,Boat_colour from boat where Boat_id in (select Boat_id from Reserves where Sailor_id in (select Sailor_id from sailor where Sailor_name = 'Shyam'));
@@ -47,7 +48,7 @@ select Boat_id from reserves;
 select count(Boat_id), sailor.Sailor_name from Reserves join sailor on Reserves.Sailor_id = sailor.Sailor_id group by sailor.Sailor_Name;
 
 # Identify which boats have the same name as their sailor.
-select Boatname, sailor.Sailor_name from boat join sailor on boat.Boatname = sailor.Sailor_Name;  
+select Boat
 
 
 
