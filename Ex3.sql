@@ -37,7 +37,7 @@ insert into Reserves values('B4','S1','MON');
 insert into Reserves values('B5','S5','MON');
 
 # Obtain the details of the boats reserved by ‘#Sailor_Name’.
-select * from boat where 
+select Boat_id, BoatName,Boat_colour from boat where Boat_id in (select Boat_id from Reserves where Sailor_id in (select Sailor_id from sailor where Sailor_name = 'Shyam'));
 
 
 
