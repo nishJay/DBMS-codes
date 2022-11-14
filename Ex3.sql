@@ -18,5 +18,31 @@ Day varchar(10),
 foreign key(Sailor_id) references sailor(Sailor_id) on delete cascade,
 foreign key(Boat_id) references boat(Boat_id) on delete cascade);
 
+insert into boat values('B1','Big','Black');
+insert into boat values('B2','Small','Blue'); 
+insert into boat values('B3','Bigger','White');
+insert into boat values('B4','Biggest','Yellow');
+insert into boat values('B5','Tiny','Orange');
+
+insert into sailor values('S1','Ram',35,'3');
+insert into sailor values('S2','Shyam',34,'4');
+insert into sailor values('S3','Jam',25,'2');
+insert into sailor values('S4','Nam',25,'1');
+insert into sailor values('S5','Dam',30,'4');
+
+insert into Reserves values('B1','S2','MON');
+insert into Reserves values('B2','S4','TUE');
+insert into Reserves values('B3','S3','WED');
+insert into Reserves values('B4','S1','MON');
+insert into Reserves values('B5','S5','MON');
+
+# Obtain the details of the boats reserved by ‘#Sailor_Name’.
+select * from boat where 
+
+
+
+
+
+
 
 
