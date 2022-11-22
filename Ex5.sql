@@ -16,7 +16,6 @@ insert into books values(126,'Database','KK','oo');
 insert into books values(127,'Bay','AA','nn');
 insert into books values(128,'Bay','AA','nn');
 insert into books values(129,'Dax','AA','nn');
-
 insert into books values(130,'Dam','AA','nn');
 
 
