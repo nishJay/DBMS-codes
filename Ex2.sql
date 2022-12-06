@@ -7,4 +7,4 @@
 
 Create table supplier(sid varchar2(20) not null primary key,  sname char(20),  saddr varchar2(20));  
 Create table part(pid varchar2(20) not null primary key,  pname char(20),  pcolor varchar2(20));  
-Create table shipment(sid varchar2(20) references supplier(sid),  pid varchar2(20)) references part(pid);  
+Create table shipment(sid varchar2(20) references supplier(sid),  pid varchar2(20)) references part(pid),no_parts number, primary key(sid,pid));  
