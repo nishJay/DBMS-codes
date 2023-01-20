@@ -39,16 +39,72 @@ insert into Reserves values('B5','S5','MON');
 insert into Reserves values('B5','S6','MON');
 
 # Obtain the details of the boats reserved by ‘Shyam’.
-select Boat_id, BoatName,Boat_colour from boat where Boat_id in (select Boat_id from Reserves where Sailor_id in (select Sailor_id from sailor where Sailor_name = 'Shyam'));
+SELECT *
+FROM BOAT
+WHERE Boat_id IN ( SELECT Boat_id 
+                   FROM RESERVES
+                   WHERE SAILOR_ID IN ( SELECT SAILOR_ID 
+                                        FROM SAILOR
+                                        WHERE SAILOR_NAME = 'Ram'));
 
 # Retrieve the BID of the boats reserved necessarily by all the sailors
-select Boat_id from reserves;
+SELECT BOATNAME,BOAT_ID
+FROM BOAT B
+WHERE NOT EXISTS (SELECT *
+                  FROM SAILOR S
+                  WHERE NOT EXISTS (SELECT * 
+                                    FROM RESERVES R
+                                    WHERE R.SAILOR_ID=S.SAILOR_ID AND R.BOAT_ID=B.BOAT_ID)) ;
+
 
 # Find the number of boats reserved by each sailor. Display the Sailor_Name along with the number of boats reserved
-select count(Boat_id), sailor.Sailor_name from Reserves join sailor on Reserves.Sailor_id = sailor.Sailor_id group by sailor.Sailor_Name;
+SELECT S.SAILOR_NAME, COUNT(R.BOAT_ID) AS "NO OF BOATS RESERVED"
+FROM SAILOR S JOIN RESERVES R
+ON S.SAILOR_ID = R.SAILOR_ID
+GROUP BY S.SAILOR_NAME;
 
 # Identify which boats have the same name as their sailor.
-select Boat
+SELECT B.BOAT_ID, B.BOATNAME
+FROM BOAT B
+WHERE B.BOAT_ID IN ( SELECT R.BOAT_ID 
+                     FROM RESERVES R
+                     WHERE R.SAILOR_ID IN ( SELECT S.SAILOR_ID
+                                            FROM SAILOR S
+                                            WHERE S.SAILOR_NAME = B.BOATNAME));
+
+//edit q3.sql
+//"Write code"
+DECLARE
+    N NUMBER :=&N;
+    J NUMBER :=2;
+    FLAG NUMBER :=0;
+BEGIN
+    WHILE J<=N/2 LOOP
+        IF MOD(N,J)=0 THEN
+            DBMS_OUTPUT.PUT_LINE(N||' IS NOT A PRIME NUMBER');
+            FLAG:=1;
+            EXIT;
+        ELSE
+            J:=J+1;
+        END IF;
+    END LOOP;
+    IF FLAG=0 THEN
+        DBMS_OUTPUT.PUT_LINE(N||' IS A PRIME NUMBER');
+    END IF;
+END;
+/
+//ESC
+//:wq
+//set server output on @q3.sql
+//exit
+//mongo
+db.createCollection("Marine");
+
+db.Marine.insertMany([{"BID":"B1","BNAME":"TINY","BCOLOR":"BLACK","SID":"S1","SNAME":"RK"}])
+
+db.Marine.find({"SNAME":"RK"}).count()
+
+db.Marine.find({"BCOLOR":"BLACK"}).pretty()
 
 
 
