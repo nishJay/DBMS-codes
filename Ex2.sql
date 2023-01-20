@@ -75,12 +75,13 @@ SELECT *
 FROM PART;
 
 #List the suppliers who supplies exactly two parts.
-SELECT S.SID, S.SNAME, COUNT(SU.SID) AS "NO. OF KINDS OF PARTS SUPPLIED"
-FROM SUPPLIER S JOIN SUPPLY SU
-ON S.SID = SU.SID
-GROUP BY SU.SID
-HAVING "NO. OF KINDS OF PARTS SUPPLIED" = 2;
-
+SELECT * 
+FROM SUPPLIER
+WHERE SID IN(SELECT SID
+              FROM SUPPLY
+              GROUP BY SID
+              HAVING COUNT(P_ID)=2);
+	      
 CREATE TABLE SHIPMENT AS
 (SELECT * FROM SUPPLY
 WHERE 1 = 2);
@@ -89,17 +90,35 @@ WHERE 1 = 2);
 //"Pl SQL Code"
 DECLARE 
 	CURSOR C1 IS SELECT * FROM SUPPLY
-        WHERE P_ID IN (101,102,103,104); --PUT PART NUMBER WHICH WE ARE INTERESTED IN HERE
+        WHERE PID IN ('P1','P2','P3','P4'); 
 	V_REC SUPPLY%ROWTYPE;
 BEGIN
 	OPEN C1;
 	LOOP
 	    FETCH C1 INTO V_REC;
 	    EXIT WHEN C1%NOTFOUND;
-        INSERT INTO SHIPMENT VALUES(V_REC.P_ID, V_REC.S_ID, V_REC.QUANTITY);
+        INSERT INTO SHIPMENT VALUES(V_REC.PID, V_REC.SID, V_REC.QUANT);
     END LOOP;
     CLOSE C1;
 END;
 /
+//"Press" Esc
+//:wq
+//set server output on @q2.sql
+SELECT * FROM SHIPMENT;
+//exit
+//mongo
 
+db.createCollection("Warehouse")
+
+db.Warehouse.insertMany([{"PID":"P1","PName":"BOLTS","Color":"GREY","SID":"S1","SName":"AA"},
+                        {"PID":"P2","PName":"TYRES","Color":"BLACK","SID":"S1","SName":"AA"},
+                        {"PID":"P3","PName":"RIMS","Color":"SILVER","SID":"S2","SName":"BB"},
+                        {"PID":"P4","PName":"SCREWS","Color":"METAL","SID":"S2","SName":"BB"},
+                        {"PID":"P5","PName":"NUTS","Color":"BLACK","SID":"S3","SName":"CC"}])
+                        
+db.Warehouse.find().pretty()
+db.Warehouse.update({"PID":"P1"},{$set:{"Color":"Gold"}},{multi:true})
+db.Warehouse.find().pretty()
+db.Warehouse.find({"PID":"P2"},{_id:0,"SName":1}).pretty()
 
